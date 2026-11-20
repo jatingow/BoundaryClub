@@ -1,90 +1,69 @@
 # Boundary Club v5
 
-The current cricket auction simulator is on [main](https://github.com/umarmahtab/BoundaryClub) and [v5](https://github.com/umarmahtab/BoundaryClub/tree/v5). The previous release is preserved on [v4](https://github.com/umarmahtab/BoundaryClub/tree/v4).
+Run a four-franchise cricket auction from one screen. Start with 238 players and ₹100 crore per team, or bring your own player pool and set the rules for your league.
 
-## What's new in v5
+**[Open the auction room](https://boundaryclubgame.vercel.app)** · [Download v5](https://github.com/umarmahtab/BoundaryClub/archive/refs/heads/v5.zip) · [Browse the v4 archive](https://github.com/umarmahtab/BoundaryClub/tree/v4)
 
-- Change franchise names, colours, and logos from the auction room. Choose a club crest or upload your own image.
-- Set retention slots, player order, audio volume, and how the bid clock responds. Use 1×, 2×, or 5× bid steps on the floor.
-- Import a text-based player roster PDF with a preview, or export a roster and a paginated auction report. PDF processing runs locally.
----
+![Boundary Club v5 setup with the engraved stadium, auction settings and four editable franchise cards](assets/screenshots/v5/auction-room.jpg)
 
-**Boundary Club** (Version 5 of *Cricket Auction Simulator*) is a broadcast-grade, four-franchise cricket auction simulator built to run seamlessly on a single screen. Name your franchises, retain your core players, manage team purses in real time, and experience the thrill of the gavel.
+## Run your first auction
 
-### 🌐 Play Live Online (Deployments)
+1. **Set up the franchises.** Edit each team name and colour on the opening screen. Select **Change logo** to use one of six club crests or upload a PNG, JPG or WebP.
+2. **Choose the rules.** Set the purse, squad size, overseas limit and retention slots. Choose a bid clock and decide whether a new bid restarts it, keeps it running, or leaves at least ten seconds.
+3. **Open the floor.** Start the auction, complete any retentions, and open a player pool. Bid with the team cards or number keys. For a jump bid, select **2×** or **5×** before choosing a team.
+4. **Close the books.** Give unsold players another round or finish the auction to see the final squads. Download a PDF scorecard or export the figures as CSV.
 
-You can launch and play the full game instantly in your browser:
+## On the bidding floor
 
-- ⚡ **Vercel:** [https://boundaryclubgame.vercel.app](https://boundaryclubgame.vercel.app)
-- 🚀 **Netlify:** [https://boundaryclub.netlify.app](https://boundaryclub.netlify.app)
+The Knights lead at **₹2.10 crore** in the example below. Each eligible team can see its next offer and how much purse it would have left after winning. Open **Bid history** to review the sequence or **Teams** to check squad composition before the next bid.
 
----
+![Live bidding for Virat Kohli with the Knights holding the highest bid and four franchise purse balances visible](assets/screenshots/v5/bidding-floor.jpg)
 
-![Boundary Club setup](assets/screenshots/setup-dark.png)
+<details>
+<summary><strong>Franchise crest editor</strong></summary>
 
-## Quick Start (Run Locally)
+Choose a crest or upload an image up to 4 MB. The saved logo follows the franchise onto the bidding floor and final scorecard.
 
-1. **Clone or Download** this repository:
-   ```bash
-   git clone https://github.com/umarmahtab/BoundaryClub.git
-   ```
-2. **Open `index.html`** in any modern desktop or mobile browser. Keep the `assets/` and `sounds/` directories alongside the file.
-3. **Configure Franchises**: Customize team names and colours on the setup screen. Open **Settings** to adjust starting purses, pacing presets, squad constraints, and retention rules.
-4. **Run the Auction**: Conduct the retention phase, open player pools, place bids with the franchise cards or number keys (`1`–`4`), and sell or pass lots.
-5. **Review & Export**: Conclude the auction to inspect final squad compositions, review spending charts, and download CSV/PDF scorecards.
+![Franchise logo editor showing six crest choices and the image upload control](assets/screenshots/v5/franchise-crests.jpg)
 
-Runs 100% locally with vanilla JavaScript, modern CSS, and zero build dependencies.
+</details>
 
----
+<details>
+<summary><strong>Mobile setup and session resume</strong></summary>
 
-## What’s New in v4 (Boundary Club)
+Return in the same browser and choose **Resume** to pick up a saved auction.
 
-| Area | Highlights |
-| --- | --- |
-| **Rebranding & Identity** | Renamed from *Cricket Auction Simulator* to **Boundary Club** (v4) with an esports/broadcast war-room design aesthetic. |
-| **Tactile 2026 UI** | Micro-rim lighting, glowing franchise border indicators, active bidder pulses, tactile button depression, and zero-scroll laptop viewport optimization. |
-| **Auction Centre** | One-click access to **Teams Dashboard** (role breakdown & completeness meters), **Remaining Players** (filters & shortlisting), **Pool Navigator**, **Unsold Players** (bulk actions & base price discounts), and **Sold Log**. |
-| **Live Bidding Stage** | Circular SVG countdown ring with urgent warning states, live increment calculator, leading bidder indicators, and quick-action gavel controls. |
-| **Pacing & Rules** | Blitz (20s), Club (40s), and Test Match (75s) pacing presets with standard and accelerated increment bands. |
-| **Reporting & Portability** | Export CSV scorecards and formatted PDF summary reports, plus JSON session backup and restore. |
+<img src="assets/screenshots/v5/mobile-setup.jpg" width="320" alt="Mobile auction setup with the franchise cards and the option to resume a previous session">
 
-### Auction Pacing Presets
+</details>
 
-| Preset | Clock | Bid Increments |
-| --- | --- | --- |
-| **Blitz** | 20 seconds | Double |
-| **Club** | 40 seconds | Standard |
-| **Test Match** | 75 seconds | Standard |
+## Bring your own players
 
-*Default starting purse is **₹100 Crore** per franchise with a curated roster of **238 players**. All database edits and imports are saved locally.*
+Open **Player pool → Import PDF** before starting the auction. Use a Boundary Club roster PDF or a selectable-text table with the four columns below. The preview shows accepted and rejected rows before you add players or replace the database.
 
-### Keyboard Controls
+| Player | Role | Country | Base (lakhs) |
+| --- | --- | --- | ---: |
+| Example Player | Spinner | India | 50 |
+
+Choose **Roster PDF** for a working example you can re-import. For an image-only scan, run OCR first. **Reports** also offers CSV and PDF auction reports and JSON session backups.
+
+## Run locally
+
+[Download the v5 ZIP](https://github.com/umarmahtab/BoundaryClub/archive/refs/heads/v5.zip), extract it, and open `index.html` in a modern browser. Keep `assets/` and `sounds/` beside it. The app and its PDF tools run locally without a build step.
+
+<details>
+<summary><strong>Auctioneer keyboard controls</strong></summary>
 
 | Key | Action |
 | --- | --- |
-| `1` – `4` | Place bid for Franchise 1, 2, 3, or 4 |
-| `Space` | Pause / resume the countdown timer |
-| `S` | Sell current player to highest bidder |
-| `N` | Advance to next player lot |
-| `R` | Restart bidding for current player |
-| `U` | Undo last recorded auction bid |
-| `M` | Toggle sound effects (Mute / Unmute) |
-| `?` | Open keyboard shortcuts help modal |
+| `1` – `4` | Bid for the corresponding franchise |
+| `Space` | Pause or resume the clock |
+| `S` / `N` | Sell the current player / open the next lot |
+| `R` / `U` | Restart the current lot / undo the last recorded action |
+| `M` / `?` | Toggle sound / show keyboard help |
+
+</details>
 
 ---
 
-## Screenshots from v4
-
-| Franchise Setup | Appearance & Theme Settings |
-| --- | --- |
-| ![Franchise setup in daylight](assets/screenshots/setup-light.png) | ![Display mode and club accent settings](assets/screenshots/settings-appearance.png) |
-
-![Live bidding floor with team purse previews and active bidder aura](assets/screenshots/bidding-dark.png)
-
-| Mobile Viewport | Final Scorecard |
-| --- | --- |
-| <img src="assets/screenshots/mobile-floor.png" alt="Mobile auction floor" width="240"> | ![Final squad scorecard](assets/screenshots/final-scorecard.png) |
-
----
-
-Developed for the love of cricket by [Umar Mahtab](https://www.instagram.com/umarmahtab18/). [GitHub](https://github.com/umarmahtab)
+Built by [Umar Mahtab](https://github.com/umarmahtab). The current release lives on [main](https://github.com/umarmahtab/BoundaryClub/tree/main) and [v5](https://github.com/umarmahtab/BoundaryClub/tree/v5). Earlier editions are available in the [v4 branch](https://github.com/umarmahtab/BoundaryClub/tree/v4) and the [v3 repository](https://github.com/umarmahtab/Cricket-Auction-Simulator-V3).
