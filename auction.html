@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const darkSchemeQuery = matchMedia('(prefers-color-scheme: dark)');
+        const modeStorageKey = 'boundaryClubDisplayMode';
+        function checkedMode(value) {
+            return ['light', 'dark'].includes(value) ? value : 'system';
+        }
+        let savedMode = checkedMode(localStorage.getItem(modeStorageKey));
+        function paintMode(mode) {
+            document.documentElement.dataset.mode = mode === 'system' ? (darkSchemeQuery.matches ? 'dark' : 'light') : mode;
+        }
+        paintMode(savedMode);
+    </script>
     <title>Boundary Club | Cricket Auction Simulator</title>
     <!-- Component utilities are bundled locally for offline auctions. -->
     <!-- jsPDF CDN for reports -->
@@ -216,6 +228,120 @@
             .modal-backdrop { padding:8px } .modal-backdrop select,.modal-backdrop input { max-width:100% }
             #remainingPoolNavigator { max-height:140px; overflow:auto }
         }
+        html { color-scheme:light }
+        html[data-mode="dark"] {
+            color-scheme:dark; --paper:#101715; --card:#1a2521; --ink:#edf2e6; --muted:#b0bfb2; --line:#37463e;
+        }
+        html[data-mode="dark"] body {
+            --night:color-mix(in srgb,var(--green) 34%,#101715);
+            --panel:color-mix(in srgb,var(--green) 25%,#253029);
+            background:radial-gradient(ellipse at 75% 0%,color-mix(in srgb,var(--green) 30%,var(--paper)),transparent 55%),var(--paper);
+            min-height:100vh;
+        }
+        [data-mode="dark"] .masthead { background:#121c18 }
+        [data-mode="dark"] .brand-title i { color:var(--accent) }
+        [data-mode="dark"] .pool-dot { background:var(--accent) }
+        [data-mode="dark"] .opening-card { border:1px solid var(--line); background:linear-gradient(115deg,var(--night),var(--green)); color:#f4f5e9 }
+        [data-mode="dark"] .match-ball { filter:saturate(.84); box-shadow:inset 2px 4px 5px #ffcc9c85,inset -9px -11px 17px #34181552,0 15px 32px #07110c }
+        [data-mode="dark"] .franchise-card { background:linear-gradient(156deg,color-mix(in srgb,var(--team) 9%,var(--card)),var(--card) 58%) }
+        [data-mode="dark"] .crest {
+            color:color-mix(in srgb,var(--team) 55%,white); background:color-mix(in srgb,var(--team) 16%,var(--card));
+            border-color:color-mix(in srgb,var(--team) 44%,var(--line));
+        }
+        [data-mode="dark"] .team-badge-icon,[data-mode="dark"] .team-btn-top-row svg { color:color-mix(in srgb,var(--team) 52%,white)!important }
+        [data-mode="dark"] .mast-actions button:hover,[data-mode="dark"] .secondary-action:hover,[data-mode="dark"] .centre-pill-btn:hover { background:#2c3b32; border-color:#607969 }
+        [data-mode="dark"] .primary-action,[data-mode="dark"] #endScreen button:not(.secondary-action) { background:var(--accent); color:#16261d }
+        [data-mode="dark"] .primary-action span:last-child { color:inherit }
+        [data-mode="dark"] .on-deck { background:#24332b; border:1px solid var(--line) }
+        [data-mode="dark"] .bid-team-card-btn:disabled { opacity:.75 }
+        [data-mode="dark"] .bid-team-card-btn.leading-team { opacity:1 }
+        [data-mode="dark"] .center-stage-ref,[data-mode="dark"] .player-box-ref,[data-mode="dark"] #endScreen,[data-mode="dark"] .stats-bar-ref { box-shadow:inset 0 0 0 1px var(--line) }
+        [data-mode="dark"] .modal-backdrop { background:#040a08cf }
+        [data-mode="dark"] .modal-backdrop > .glass-effect { border-color:#48594d }
+        [data-mode="dark"] :is(.modal-backdrop,#endScreen) [class*="bg-gray-9"] { background-color:var(--night) }
+        [data-mode="dark"] :is(.modal-backdrop,#endScreen) [class*="bg-gray-8"] { background-color:var(--panel) }
+        [data-mode="dark"] .modal-backdrop :is(input,select,textarea):not([type=radio],[type=checkbox],[type=range]) { background:var(--card); color:var(--ink); border-color:#526457 }
+        [data-mode="dark"] input::placeholder { color:#9dab9e }
+        [data-mode="dark"] .modal-backdrop .text-gray-500 { color:var(--muted) }
+        [data-mode="dark"] #messageBox > div { color:var(--accent) }
+        [data-mode="dark"] .centre-tab.bg-fuchsia-600,[data-mode="dark"] .settings-tab-btn.active { background:var(--accent) }
+        [data-mode="dark"] .sold-stamp { background:#13221b }
+        [data-mode="dark"] #resumeBanner,[data-mode="dark"] .toast-item { background:var(--panel) }
+        [data-mode="dark"] :focus-visible { outline-color:#edbc78!important }
+        [data-mode="dark"] .moon-icon,html:not([data-mode="dark"]) .sun-icon { display:none }
+        :is(.modal-backdrop,#endScreen) { color-scheme:dark }
+        .team-btn-sub { color:var(--muted); font-size:11px; margin-top:5px }
+        .bid-journal { margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:11px; overflow:hidden }
+        .bid-journal summary { display:flex; align-items:center; gap:10px; cursor:pointer; padding:13px 16px; list-style:none; font-weight:650; font-size:14px }
+        .bid-journal summary::-webkit-details-marker { display:none }
+        .bid-journal summary::before { content:'›'; font:20px/1 Georgia; color:var(--muted); transform-origin:center; transition:transform .15s }
+        .bid-journal[open] summary::before { transform:rotate(90deg) }
+        #bidHistoryCount { margin-left:auto; font:600 11px/1.4 monospace; color:var(--muted) }
+        #bidHistoryList { max-height:12rem; overflow:auto; font-size:13px }
+        #bidHistoryList li { padding:9px 16px; display:flex; align-items:center; gap:12px; border-top:1px solid var(--line) }
+        #bidHistoryList strong { margin-left:auto } #bidHistoryList time { color:var(--muted); font:11px monospace }
+        #settingsModal > .glass-effect { width:min(790px,100%); max-width:none; padding:0; border-radius:18px; color:#eaf0e6 }
+        .settings-heading { margin:0; padding:19px 24px 15px; background:linear-gradient(110deg,var(--green),var(--night)); border-color:#ffffff21 }
+        .settings-heading .eyebrow,.club-letter .eyebrow { color:var(--accent) }
+        #settingsModal .settings-heading h2 { font:400 30px/1.2 var(--display); margin-top:4px }
+        .settings-heading h2 svg { display:none }
+        .settings-layout { display:grid; grid-template-columns:164px minmax(0,1fr); min-height:0; height:min(425px,56dvh) }
+        #settingsModal .settings-nav { display:flex; flex-direction:column; gap:4px; align-items:stretch; flex-wrap:nowrap; padding:17px 10px; border-right:1px solid #ffffff25; background:#00000017; overflow:auto }
+        #settingsModal .settings-tab-btn { text-align:left; padding:9px 12px; color:#c2cfc3; font-size:13px; font-weight:600 }
+        #settingsModal .settings-tab-btn.active { color:#15271d; background:var(--accent) }
+        .settings-content { overflow:auto; min-height:0; padding:18px 24px 20px; scrollbar-color:#52675a transparent; scrollbar-width:thin }
+        #settingsModal .settings-content h3 { font:400 25px/1.15 var(--display); letter-spacing:-.035em; margin:0 0 15px }
+        @media(max-width:370px) {
+            .mast-inner { gap:4px } .brand-title { font-size:19px; gap:4px } .brand-mark { width:22px; height:22px }
+            .mast-actions button { min-width:26px; padding:4px }
+        }
+        .settings-content .field-title { font-size:13px; font-weight:650; margin-bottom:8px }
+        .settings-content .field-hint { font-size:12px; line-height:1.45; color:#b6c5b7; margin-top:8px }
+        .mode-picker,.preset-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px }
+        .mode-option { position:relative; cursor:pointer }
+        .mode-option input { position:absolute; opacity:0; width:1px; height:1px }
+        .mode-option span,.preset-grid button { display:flex; flex-direction:column; gap:5px; align-items:flex-start; border:1px solid #ffffff34; border-radius:9px; padding:10px 12px; background:var(--panel); font-size:13px }
+        .mode-option span { flex-direction:row; align-items:center; justify-content:center; min-height:45px }
+        .mode-option input:checked + span,.preset-grid button[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); background:color-mix(in srgb,var(--accent) 9%,var(--night)) }
+        .mode-option input:focus-visible + span { outline:2px solid #edbc78; outline-offset:2px }
+        .preset-grid button small { font-size:11px; font-weight:400; color:#c5d2c7 }
+        .settings-bottom { padding:12px 24px; margin:0; border-color:#ffffff24 }
+        #cancelSettingsBtn { padding:6px 14px; font-size:13px; color:#c5d0c6 }
+        .club-letter > p:not(.eyebrow,.signature) { font:400 16px/1.6 var(--display); color:#e2e9dc; margin-bottom:10px; max-width:48ch }
+        #settingsModal .club-letter h3 { margin:6px 0 16px }
+        .signature { font:italic 23px/1.3 var(--display); color:var(--accent); margin-top:16px }
+        .club-links { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:12px; padding-top:10px; border-top:1px solid #ffffff27 }
+        .club-links a,.club-credit a { text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor }
+        .club-links a { font-size:12px; color:#bdcec0 } .club-links a:hover { color:var(--accent) }
+        .club-credit { width:min(1240px,92%); margin:8px auto 18px; display:flex; align-items:center; justify-content:center; gap:8px; color:var(--muted); font:italic 13px/1.5 var(--display); text-align:center }
+        .club-credit a { color:var(--ink) }
+        .credit-stitches { width:16px; height:16px; border:1px solid currentColor; border-radius:50%; position:relative; overflow:hidden; transform:rotate(-35deg); opacity:.72; flex:none }
+        .credit-stitches::after { content:''; position:absolute; inset:-3px 6px; border-left:2px dashed currentColor; border-radius:50% }
+        @media (min-width:651px) {
+            body {
+                display:flex;
+                flex-direction:column;
+                min-height:100vh;
+                min-height:100dvh;
+            }
+            #app {
+                flex:none;
+                margin-block:auto;
+                padding-block:24px;
+            }
+            .club-credit {
+                margin-block:0;
+                padding-block:12px 18px;
+            }
+        }
+        @media(max-width:650px) {
+            #settingsModal .settings-layout { display:flex; flex-direction:column; height:min(500px,65dvh) }
+            #settingsModal .settings-nav { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); flex:none; padding:6px 8px; gap:3px; border:0; border-bottom:1px solid #ffffff25 }
+            #settingsModal .settings-tab-btn { white-space:normal; text-align:center; padding:4px; font-size:11px }
+            .settings-content { flex:1; padding:15px } .settings-heading,.settings-bottom { padding:12px 15px }
+            .preset-grid button,.mode-option span { padding:8px; font-size:12px } .preset-grid button small { font-size:10px }
+            .mast-actions button { min-width:29px } .mast-actions { gap:2px } .club-credit { width:94% }
+        }
         .reduced-motion *, .reduced-motion *::after { animation:none!important; transition:none!important }
         @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important } }
     </style>
@@ -244,6 +370,7 @@
             <span class="brand-divider"></span>
             <div id="headerProgress" class="pool-badge-pill"><span class="pool-dot"></span><span id="headerProgressText">Auction setup</span></div>
             <nav class="mast-actions" aria-label="Auction tools">
+                <button id="quickModeBtn" aria-label="Switch display mode" title="Switch display mode"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><g class="moon-icon"><path d="M20.5 14a8.5 8.5 0 0 1-10.6-10.6A8.8 8.8 0 1 0 20.5 14Z"/></g><g class="sun-icon"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></g></svg></button>
                 <button id="toggleAudioBtn" title="Toggle sound (M)"><span id="audioIcon"></span><span id="audioStatusText">Audio</span></button>
                 <button id="helpBtn" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts"><span aria-hidden="true">⌨</span></button>
                 <button id="resetAuctionBtn" title="Reset auction" aria-label="Reset auction"><span aria-hidden="true">↺</span></button>
@@ -525,6 +652,7 @@
                                 <span class="team-key-chip">1</span>
                             </div>
                             <div class="team-bid-action-val team-btn-bid">Bid ₹2 Cr</div>
+                            <div class="team-btn-sub"></div>
                             <div class="team-btn-reason hidden"></div>
                         </button>
 
@@ -538,6 +666,7 @@
                                 <span class="team-key-chip">2</span>
                             </div>
                             <div class="team-bid-action-val team-btn-bid">Bid ₹2 Cr</div>
+                            <div class="team-btn-sub"></div>
                             <div class="team-btn-reason hidden"></div>
                         </button>
 
@@ -551,6 +680,7 @@
                                 <span class="team-key-chip">3</span>
                             </div>
                             <div class="team-bid-action-val team-btn-bid">Bid ₹2 Cr</div>
+                            <div class="team-btn-sub"></div>
                             <div class="team-btn-reason hidden"></div>
                         </button>
 
@@ -564,6 +694,7 @@
                                 <span class="team-key-chip">4</span>
                             </div>
                             <div class="team-bid-action-val team-btn-bid">Bid ₹2 Cr</div>
+                            <div class="team-btn-sub"></div>
                             <div class="team-btn-reason hidden"></div>
                         </button>
                     </div>
@@ -579,6 +710,10 @@
 
                 <div id="messageBox" class="absolute bottom-1.5 left-0 right-0 text-center text-xs font-bold pointer-events-none"></div>
             </div>
+            <details id="bidHistory" class="bid-journal">
+                <summary><span>Bid history</span><span id="bidHistoryCount">0 bids</span></summary>
+                <ol id="bidHistoryList" aria-label="Bids for the current player"></ol>
+            </details>
         </div>
         <!-- END SCREEN -->
         <div id="endScreen" class="hidden text-center glass-effect p-4 md:p-6 rounded-2xl shadow-lg flex-1 overflow-y-auto">
@@ -589,6 +724,7 @@
              <button id="resultsCsv" class="secondary-action">Export scorecard (CSV)</button> <button onclick="location.reload()" class="mt-6 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold py-2.5 px-6 rounded-lg">Start New Auction</button>
         </div>
     </main>
+    <footer class="club-credit"><span class="credit-stitches" aria-hidden="true"></span><p>Developed for the love of cricket by <a href="https://www.instagram.com/umarmahtab18/" target="_blank" rel="noopener noreferrer">Umar Mahtab</a>.</p></footer>
 
     <!-- ==================== MODALS ==================== -->
 
@@ -840,33 +976,43 @@
     <!-- SETTINGS MODAL (Organized Tabbed Layout) -->
     <div id="settingsModal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-3 md:p-4">
         <div class="glass-effect bg-gray-900 w-full max-w-2xl max-h-[92vh] flex flex-col p-4 md:p-6 rounded-2xl shadow-2xl border border-gray-600 overflow-hidden">
-            <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
-                <h2 class="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-                    <svg class="w-5 h-5 text-fuchsia-400 inline mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Auction Settings
-                </h2>
-                <button id="closeSettingsBtn" class="text-gray-400 hover:text-white text-2xl leading-none">&times;</button>
+            <div class="settings-heading flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
+                <div><p class="eyebrow">Boundary Club</p><h2 class="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-fuchsia-400 inline mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Club settings
+                </h2></div>
+                <button id="closeSettingsBtn" aria-label="Discard settings changes and close" class="text-gray-400 hover:text-white text-2xl leading-none">&times;</button>
             </div>
 
+            <div class="settings-layout">
             <!-- Settings Tabs -->
-            <div class="flex gap-2 border-b border-gray-800 pb-2 mb-4 overflow-x-auto shrink-0">
+            <nav class="settings-nav" aria-label="Settings sections">
                 <button class="settings-tab-btn active px-3 py-1 rounded text-xs font-bold bg-fuchsia-600 text-white" data-target="setTabRules">Auction Rules</button>
                 <button class="settings-tab-btn px-3 py-1 rounded text-xs font-bold text-gray-400 hover:text-white" data-target="setTabSquad">Squad Rules</button>
                 <button class="settings-tab-btn px-3 py-1 rounded text-xs font-bold text-gray-400 hover:text-white" data-target="setTabBidding">Bidding & Bands</button>
                 <button class="settings-tab-btn px-3 py-1 rounded text-xs font-bold text-gray-400 hover:text-white" data-target="setTabAppearance">Appearance</button>
                 <button class="settings-tab-btn px-3 py-1 rounded text-xs font-bold text-gray-400 hover:text-white" data-target="setTabData">Data & Defaults</button>
-            </div>
+                <button class="settings-tab-btn" data-target="setTabClub">From the developer</button>
+            </nav>
 
             <!-- Tab Content Area -->
-            <div class="flex-1 overflow-y-auto space-y-4 pr-1">
+            <div class="settings-content">
                 <!-- Tab: Auction Rules -->
                 <div id="setTabRules" class="settings-tab-content space-y-4">
+                    <h3>Auction rules</h3>
+                    <fieldset><legend class="field-title">Auction pace</legend>
+                        <div class="preset-grid">
+                            <button type="button" data-clock="20" data-bands="double"><strong>Blitz</strong><small>20 s · Double bids</small></button>
+                            <button type="button" data-clock="40" data-bands="real"><strong>Club</strong><small>40 s · Standard</small></button>
+                            <button type="button" data-clock="75" data-bands="real"><strong>Test match</strong><small>75 s · Standard</small></button>
+                        </div>
+                    </fieldset>
                     <div>
-                        <label class="block text-gray-300 text-xs font-semibold mb-1">Starting Purse per Team (Lakhs)</label>
+                        <label for="settingPurse" class="block text-gray-300 text-xs font-semibold mb-1">Starting Purse per Team (Lakhs)</label>
                         <input type="number" id="settingPurse" min="1" required class="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 text-sm" value="10000">
                         <p class="text-[11px] text-gray-400 mt-0.5">Default 10,000 Lakhs = ₹100 Crore.</p>
                     </div>
                     <div>
-                        <label class="block text-gray-300 text-xs font-semibold mb-1">Timer Countdown: <span id="timerValueDisplay" class="text-fuchsia-300 font-bold">40</span>s</label>
+                        <label for="settingTimer" class="block text-gray-300 text-xs font-semibold mb-1">Timer Countdown: <span id="timerValueDisplay" class="text-fuchsia-300 font-bold">40</span>s</label>
                         <input type="range" id="settingTimer" min="10" max="120" step="5" value="40" class="w-full accent-fuchsia-500 cursor-pointer">
                     </div>
                     <div class="flex items-center justify-between p-2 rounded bg-gray-800/60 border border-gray-700">
@@ -874,42 +1020,42 @@
                             <p class="text-sm font-semibold text-white">Enable Retention Phase</p>
                             <p class="text-[11px] text-gray-400">Teams choose up to 5 players before auction begins.</p>
                         </div>
-                        <input type="checkbox" id="settingRetention" checked class="w-5 h-5 accent-fuchsia-500">
+                        <input type="checkbox" aria-label="Enable retention phase" id="settingRetention" checked class="w-5 h-5 accent-fuchsia-500">
                     </div>
                     <div class="flex items-center justify-between p-2 rounded bg-gray-800/60 border border-gray-700">
                         <div>
                             <p class="text-sm font-semibold text-white">Enable Unsold Re-auction Round</p>
                             <p class="text-[11px] text-gray-400">Re-auction unsold players for a final chance.</p>
                         </div>
-                        <input type="checkbox" id="settingUnsoldRound" checked class="w-5 h-5 accent-fuchsia-500">
+                        <input type="checkbox" aria-label="Enable unsold re-auction" id="settingUnsoldRound" checked class="w-5 h-5 accent-fuchsia-500">
                     </div>
                 </div>
 
                 <!-- Tab: Squad Rules -->
-                <div id="setTabSquad" class="settings-tab-content hidden space-y-4">
+                <div id="setTabSquad" class="settings-tab-content hidden space-y-4"><h3>Squad limits</h3>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-gray-300 text-xs font-semibold mb-1">Maximum Squad Size</label>
+                            <label for="settingMaxSquad" class="block text-gray-300 text-xs font-semibold mb-1">Maximum Squad Size</label>
                             <input type="number" id="settingMaxSquad" min="15" max="30" value="25" class="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 text-sm">
                             <p class="text-[10px] text-gray-400 mt-0.5">Standard IPL: 25</p>
                         </div>
                         <div>
-                            <label class="block text-gray-300 text-xs font-semibold mb-1">Minimum Squad Size</label>
+                            <label for="settingMinSquad" class="block text-gray-300 text-xs font-semibold mb-1">Minimum Squad Size</label>
                             <input type="number" id="settingMinSquad" min="10" max="25" value="18" class="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 text-sm">
                             <p class="text-[10px] text-gray-400 mt-0.5">Standard IPL: 18</p>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-gray-300 text-xs font-semibold mb-1">Max Overseas Players</label>
+                        <label for="settingMaxOverseas" class="block text-gray-300 text-xs font-semibold mb-1">Max Overseas Players</label>
                         <input type="number" id="settingMaxOverseas" min="0" max="15" value="8" class="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 text-sm">
                         <p class="text-[10px] text-gray-400 mt-0.5">Standard IPL: 8 overseas</p>
                     </div>
                 </div>
 
                 <!-- Tab: Bidding & Increment Bands -->
-                <div id="setTabBidding" class="settings-tab-content hidden space-y-4">
+                <div id="setTabBidding" class="settings-tab-content hidden space-y-4"><h3>Bid increments</h3>
                     <div>
-                        <label class="block text-gray-300 text-xs font-semibold mb-1">Bid Increment Mode</label>
+                        <label for="settingBidMode" class="block text-gray-300 text-xs font-semibold mb-1">Bid Increment Mode</label>
                         <select id="settingBidMode" class="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 text-sm">
                             <option value="real">Real IPL — ₹5L / ₹10L / ₹20L / ₹25L</option>
                             <option value="double">Double Increments — ₹10L / ₹20L / ₹40L / ₹50L</option>
@@ -940,8 +1086,13 @@
 
                 <!-- Tab: Appearance & Sound -->
                 <div id="setTabAppearance" class="settings-tab-content hidden space-y-4">
+                    <h3>Appearance &amp; sound</h3>
+                    <fieldset><legend class="field-title">Display mode</legend>
+                        <div class="mode-picker"><label class="mode-option"><input type="radio" name="displayMode" value="light"><span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></svg>Light</span></label><label class="mode-option"><input type="radio" name="displayMode" value="dark"><span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.5 14a8.5 8.5 0 0 1-10.6-10.6A8.8 8.8 0 1 0 20.5 14Z"/></svg>Dark</span></label><label class="mode-option"><input type="radio" name="displayMode" value="system"><span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M9 21h6m-3-4.5V21"/></svg>System</span></label></div>
+                        <p class="field-hint">System follows your device. Save to remember your choice for the next auction.</p>
+                    </fieldset>
                     <div>
-                        <label class="block text-gray-300 text-xs font-semibold mb-1">Color Theme</label>
+                        <label class="block text-gray-300 text-xs font-semibold mb-1" for="settingTheme">Club accent</label>
                         <select id="settingTheme" class="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 text-sm">
                             <option value="fuchsia">Pavilion Green (Default)</option>
                             <option value="ocean">Ocean Blue</option>
@@ -955,19 +1106,19 @@
                             <p class="text-sm font-semibold text-white">Enable Audio & Sound FX</p>
                             <p class="text-[11px] text-gray-400">Bidding gavel, crowd cheers, timer tension sound.</p>
                         </div>
-                        <input type="checkbox" id="settingAudio" checked class="w-5 h-5 accent-fuchsia-500">
+                        <input type="checkbox" aria-label="Enable auction sounds" id="settingAudio" checked class="w-5 h-5 accent-fuchsia-500">
                     </div>
                     <div class="flex items-center justify-between p-2 rounded bg-gray-800/60 border border-gray-700">
                         <div>
                             <p class="text-sm font-semibold text-white">Reduced Motion Mode</p>
                             <p class="text-[11px] text-gray-400">Minimize animations and background movement.</p>
                         </div>
-                        <input type="checkbox" id="settingReducedMotion" class="w-5 h-5 accent-fuchsia-500">
+                        <input type="checkbox" aria-label="Reduce motion" id="settingReducedMotion" class="w-5 h-5 accent-fuchsia-500">
                     </div>
                 </div>
 
                 <!-- Tab: Data & Defaults -->
-                <div id="setTabData" class="settings-tab-content hidden space-y-4">
+                <div id="setTabData" class="settings-tab-content hidden space-y-4"><h3>Reports &amp; backups</h3>
                     <div class="grid grid-cols-2 gap-2">
                         <button id="exportCsvBtn" class="bg-green-700 hover:bg-green-600 text-white py-2 px-3 rounded text-xs font-bold flex items-center justify-center gap-1.5 transition">
                             <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Export CSV Report
@@ -987,10 +1138,20 @@
                         </button>
                     </div>
                 </div>
+                <section id="setTabClub" class="settings-tab-content hidden club-letter">
+                    <p class="eyebrow">From the developer</p>
+                    <h3>For the love of cricket</h3>
+                    <p>Everyone has that one player they’d spend their last crore on. My favourite part of an auction is the silence just before someone raises their hand again.</p>
+                    <p>I built Boundary Club so we could have that moment with our friends. I hope your favourite player makes it into your XI.</p>
+                    <p class="signature">Umar Mahtab</p>
+                    <div class="club-links"><a href="https://github.com/umarmahtab" target="_blank" rel="noopener noreferrer">GitHub · @umarmahtab ↗</a><a href="https://www.instagram.com/umarmahtab18/" target="_blank" rel="noopener noreferrer">Instagram · @umarmahtab18 ↗</a></div>
+                </section>
+            </div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-gray-700 flex justify-end gap-2 shrink-0">
-                <button id="saveSettingsBtn" class="bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-5 py-2 rounded-lg text-xs font-bold shadow">Save & Close</button>
+            <div class="settings-bottom mt-4 pt-3 border-t border-gray-700 flex justify-end gap-2 shrink-0">
+                <button id="cancelSettingsBtn">Cancel</button>
+                <button id="saveSettingsBtn" class="bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-5 py-2 rounded-lg text-xs font-bold shadow">Save settings</button>
             </div>
         </div>
     </div>
@@ -1440,7 +1601,7 @@ let appState = {
     settings: {
         initialPurse: 10000,
         timerDuration: 40,
-        theme: "fuchsia",
+        theme: localStorage.getItem("boundaryClubAccent") || "fuchsia",
         enableRetention: true,
         enableUnsoldRound: true,
         enableAudio: localStorage.getItem('cricketAuctionAudio') !== '0',
@@ -1448,7 +1609,7 @@ let appState = {
         maxSquadSize: 25,
         minSquadSize: 18,
         maxOverseasPlayers: 8,
-        reducedMotion: false
+        reducedMotion: localStorage.getItem("boundaryClubReducedMotion") === "1"
     },
     masterPlayerList: JSON.parse(localStorage.getItem('cricketAuctionPlayerDatabase') || JSON.stringify(defaultPlayers)),
     playerPools: {},
@@ -1831,6 +1992,7 @@ function pushHistory(label) {
     const snapshot = {
         label,
         lastBidInfo: appState.lastBidInfo,
+        lotBids: [...(appState.lotBids || [])],
         unsoldRoundIds: (appState.currentUnsoldRoundPlayers || []).map(player => player.id),
         currentPoolIndex: appState.currentPoolIndex,
         currentPlayerIndex: appState.currentPlayerIndex,
@@ -1865,6 +2027,7 @@ function undoLastAction() {
     const prev = appState.actionHistory.pop();
     appState.phase = 'bidding';
     appState.lastBidInfo = prev.lastBidInfo || null;
+    appState.lotBids = prev.lotBids || [];
 
     appState.currentPoolIndex = prev.currentPoolIndex;
     appState.currentPlayerIndex = prev.currentPlayerIndex;
@@ -1937,6 +2100,7 @@ function loadState() {
         }
         clearInterval(appState.timerId);
         appState = parsed;
+        appState.lotBids = Array.isArray(parsed.lotBids) ? parsed.lotBids : (parsed.lastBidInfo ? [parsed.lastBidInfo] : []);
         appState.unsoldSelectedIds = new Set(Array.isArray(parsed.unsoldSelectedIds) ? parsed.unsoldSelectedIds : []);
         const byId = new Map(Object.values(appState.playerPools).flat().map(p => [p.id, p]));
         appState.currentUnsoldRoundPlayers = (parsed.currentUnsoldRoundPlayers || []).map(p => byId.get(p.id)).filter(Boolean);
@@ -1963,17 +2127,7 @@ function loadState() {
         if (!appState.shortlist) appState.shortlist = [];
         if (!appState.acceleratedQueue) appState.acceleratedQueue = [];
 
-        document.getElementById('settingPurse').value = appState.settings.initialPurse || 10000;
-        document.getElementById('settingTimer').value = appState.settings.timerDuration || 40;
-        document.getElementById('timerValueDisplay').textContent = appState.settings.timerDuration || 40;
-        document.getElementById('settingReducedMotion').checked = !!appState.settings.reducedMotion;
-        document.getElementById('settingRetention').checked = appState.settings.enableRetention !== false;
-        document.getElementById('settingUnsoldRound').checked = appState.settings.enableUnsoldRound !== false;
-        document.getElementById('settingTheme').value = appState.settings.theme;
-        document.getElementById('settingBidMode').value = appState.settings.bidMode;
-        document.getElementById('settingMaxSquad').value = appState.settings.maxSquadSize;
-        document.getElementById('settingMinSquad').value = appState.settings.minSquadSize;
-        document.getElementById('settingMaxOverseas').value = appState.settings.maxOverseasPlayers;
+        syncSettingsForm();
         appState.teams.forEach((team, index) => {
             const colorInput = document.getElementById(`team${index + 1}Color`);
             if (colorInput) colorInput.value = team.color;
@@ -2336,6 +2490,7 @@ function startUnsoldRound() {
 
     appState.phase = 'bidding';
     appState.lastBidInfo = null;
+    appState.lotBids = [];
     appState.currentPlayerIndex = 0;
     appState.highestBidder = null;
     appState.currentBid = appState.currentUnsoldRoundPlayers[0].basePrice;
@@ -2383,6 +2538,7 @@ function nextPlayer() {
     appState.highestBidder = null;
     appState.currentBid = player.basePrice;
     appState.lastBidInfo = null;
+    appState.lotBids = [];
     displayPlayer(player);
     updateControls(true);
 
@@ -2406,7 +2562,32 @@ function renderLiveLot(player) {
     updateAuctioneerStatus('open');
 }
 
+function renderBidHistory() {
+    const bids = appState.lotBids || [];
+    document.getElementById('bidHistoryCount').textContent = bids.length + (bids.length === 1 ? ' bid' : ' bids');
+    const list = document.getElementById('bidHistoryList');
+    list.replaceChildren();
+    if (!bids.length) {
+        const empty = document.createElement('li');
+        empty.textContent = 'No bids for this player yet.';
+        list.append(empty);
+        return;
+    }
+    for (const bid of [...bids].reverse()) {
+        const row = document.createElement('li');
+        const name = document.createElement('span');
+        const amount = document.createElement('strong');
+        const time = document.createElement('time');
+        name.textContent = bid.teamName;
+        amount.textContent = '₹' + formatPrice(bid.amount);
+        time.textContent = new Date(bid.time).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+        row.append(name, amount, time);
+        list.append(row);
+    }
+}
+
 function displayPlayer(player) {
+    renderBidHistory();
     const stamp = document.getElementById('soldStamp');
     const playerCard = document.getElementById('playerCard');
     if (playerCard) playerCard.classList.remove('player-state-sold', 'player-state-unsold');
@@ -2473,6 +2654,7 @@ function updateAuctioneerStatus(status) {
     if (!badge || !text) return;
     const settled = status === 'sold' || status === 'unsold';
     document.getElementById('pauseTimerBtn').disabled = settled;
+    document.querySelectorAll('.team-btn-sub').forEach(el => el.hidden = settled);
     if (settled) {
         timerDisplay.textContent = '—';
         timerRing.style.strokeDashoffset = ringCircumference;
@@ -2530,9 +2712,12 @@ function updateControls(isNewPlayer) {
         btn.classList.toggle('leading-team', appState.highestBidder === tid);
         btn.setAttribute('aria-label', team.name + ', bid ₹' + formatPrice(nextBidAmount));
         if (nameEl) nameEl.innerText = team.name;
-        if (bidEl) bidEl.innerText = `Bid ₹${formatPrice(nextBidAmount)}`;
+        if (bidEl) bidEl.textContent = appState.highestBidder === tid ? `Holding ₹${formatPrice(appState.currentBid)}` : `Bid ₹${formatPrice(nextBidAmount)}`;
         const osCount = getOverseasCount(team);
-        if (subEl) subEl.innerText = `₹${formatPrice(team.purse)} · ${team.squad.length}/${maxSquad} · OS:${osCount}/${maxOverseas}`;
+        if (subEl) {
+            const cost = appState.highestBidder === tid ? appState.currentBid : nextBidAmount;
+            subEl.textContent = team.purse >= cost ? 'Purse after win · ₹' + formatPrice(team.purse - cost) : '';
+        }
 
         let ineligibleReason = null;
         if (appState.timerPaused) {
@@ -2689,6 +2874,8 @@ function bid(teamIdx) {
     appState.currentBid = newBid;
     appState.highestBidder = teamIdx;
     appState.lastBidInfo = { teamIdx, teamName: team.name, amount: newBid, time: Date.now() };
+    appState.lotBids.push(appState.lastBidInfo);
+    renderBidHistory();
 
     // Price Pop Animation
     currentBidEl.innerText = `₹${formatPrice(appState.currentBid)}`;
@@ -2871,6 +3058,7 @@ function restartCurrentPlayer() {
     appState.highestBidder = null;
     appState.currentBid = player.basePrice;
     appState.lastBidInfo = null;
+    appState.lotBids = [];
 
     const stamp = document.getElementById('soldStamp');
     if (stamp) {
@@ -3403,6 +3591,7 @@ document.getElementById('unsoldReauctionSelectedBtn').addEventListener('click', 
     appState.currentUnsoldRoundPlayers = selected;
     appState.phase = 'bidding';
     appState.lastBidInfo = null;
+    appState.lotBids = [];
     appState.currentPlayerIndex = 0;
     appState.highestBidder = null;
     appState.currentBid = selected[0].basePrice;
@@ -3590,17 +3779,74 @@ function updatePurseDashboard() {
 }
 
 // ==================== SETTINGS MODAL HANDLING ====================
+const settingsPanel = document.getElementById('settingsModal');
+const modeInputs = [...settingsPanel.querySelectorAll('input[name="displayMode"]')];
+function showDisplayMode(mode) {
+    paintMode(mode);
+    const button = document.getElementById('quickModeBtn');
+    const target = document.documentElement.dataset.mode === 'dark' ? 'light' : 'dark';
+    button.title = 'Switch to ' + target + ' mode';
+    button.setAttribute('aria-label', button.title);
+}
+function commitMode(mode) {
+    savedMode = checkedMode(mode);
+    localStorage.setItem(modeStorageKey, savedMode);
+    showDisplayMode(savedMode);
+}
+function syncPresetButtons() {
+    const timer = document.getElementById('settingTimer').value;
+    const bands = document.getElementById('settingBidMode').value;
+    settingsPanel.querySelectorAll('[data-clock]').forEach(button => {
+        button.setAttribute('aria-pressed', button.dataset.clock === timer && button.dataset.bands === bands);
+    });
+}
+function syncSettingsForm() {
+    const s = appState.settings;
+    const values = { settingPurse:s.initialPurse, settingTimer:s.timerDuration || 40, settingTheme:s.theme, settingBidMode:s.bidMode, settingMaxSquad:s.maxSquadSize, settingMinSquad:s.minSquadSize, settingMaxOverseas:s.maxOverseasPlayers };
+    for (const [id, value] of Object.entries(values)) document.getElementById(id).value = value;
+    const switches = { settingAudio:s.enableAudio !== false, settingRetention:s.enableRetention !== false, settingUnsoldRound:s.enableUnsoldRound !== false, settingReducedMotion:!!s.reducedMotion };
+    for (const [id, checked] of Object.entries(switches)) document.getElementById(id).checked = checked;
+    modeInputs.forEach(input => input.checked = input.value === savedMode);
+    document.getElementById('timerValueDisplay').textContent = values.settingTimer;
+    document.getElementById('settingBidMode').dispatchEvent(new Event('change'));
+}
+document.getElementById('quickModeBtn').addEventListener('click', () => {
+    commitMode(document.documentElement.dataset.mode === 'dark' ? 'light' : 'dark');
+});
+modeInputs.forEach(input => input.addEventListener('change', () => showDisplayMode(input.value)));
+darkSchemeQuery.addEventListener('change', () => {
+    const mode = settingsPanel.classList.contains('hidden') ? savedMode : modeInputs.find(input => input.checked)?.value || savedMode;
+    showDisplayMode(mode);
+});
+document.getElementById('settingTheme').addEventListener('change', e => applyTheme(e.target.value));
+settingsPanel.querySelectorAll('[data-clock]').forEach(button => button.addEventListener('click', () => {
+    document.getElementById('settingTimer').value = button.dataset.clock;
+    document.getElementById('timerValueDisplay').textContent = button.dataset.clock;
+    const bands = document.getElementById('settingBidMode');
+    bands.value = button.dataset.bands;
+    bands.dispatchEvent(new Event('change'));
+}));
 document.getElementById('settingsBtn').addEventListener('click', () => {
+    syncSettingsForm();
     document.getElementById('settingPurse').disabled = appState.auctionStarted;
     settingsModal.classList.remove('hidden');
 });
-document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+function cancelSettings() {
+    showDisplayMode(savedMode);
+    applyTheme(appState.settings.theme);
     settingsModal.classList.add('hidden');
-});
+}
+document.getElementById('closeSettingsBtn').addEventListener('click', cancelSettings);
+document.getElementById('cancelSettingsBtn').addEventListener('click', cancelSettings);
 document.getElementById('saveSettingsBtn').addEventListener('click', () => {
     const numbers = [...settingsModal.querySelectorAll('input[type=number]')];
     const invalid = numbers.find(input => !input.disabled && (!input.value || !input.checkValidity()));
-    if (invalid) { showToast('Check the numeric limits in the auction settings.', 'warning'); return; }
+    if (invalid) {
+        settingsPanel.querySelector('[data-target="' + invalid.closest('.settings-tab-content').id + '"]').click();
+        invalid.focus();
+        invalid.reportValidity();
+        return;
+    }
     if (+document.getElementById('settingMinSquad').value > +document.getElementById('settingMaxSquad').value) { showToast('Minimum squad size must fit within the maximum.', 'warning'); return; }
     if (!appState.auctionStarted) appState.settings.initialPurse = Number(document.getElementById('settingPurse').value);
     appState.settings.timerDuration = parseInt(document.getElementById('settingTimer').value) || 40;
@@ -3613,7 +3859,9 @@ document.getElementById('saveSettingsBtn').addEventListener('click', () => {
     appState.settings.enableUnsoldRound = document.getElementById('settingUnsoldRound').checked;
     appState.settings.reducedMotion = document.getElementById('settingReducedMotion').checked;
 
-    document.body.classList.toggle('reduced-motion', appState.settings.reducedMotion);
+    commitMode(modeInputs.find(input => input.checked).value);
+    localStorage.setItem('boundaryClubAccent', appState.settings.theme);
+    localStorage.setItem('boundaryClubReducedMotion', appState.settings.reducedMotion ? '1' : '0');
     applyTheme(appState.settings.theme);
     setAudioEnabled(document.getElementById('settingAudio').checked);
 
@@ -3631,20 +3879,24 @@ document.querySelectorAll('.settings-tab-btn').forEach(btn => {
             b.classList.remove('active', 'bg-fuchsia-600', 'text-white');
             b.classList.add('text-gray-400');
         });
+        settingsPanel.querySelectorAll('.settings-tab-btn').forEach(tab => tab.setAttribute('aria-pressed', tab === btn));
         btn.classList.add('active', 'bg-fuchsia-600', 'text-white');
         btn.classList.remove('text-gray-400');
 
         const target = btn.dataset.target;
         document.querySelectorAll('.settings-tab-content').forEach(c => c.classList.add('hidden'));
         document.getElementById(target).classList.remove('hidden');
+        settingsPanel.querySelector('.settings-content').scrollTop = 0;
     });
 });
 
 document.getElementById('settingTimer').addEventListener('input', (e) => {
     document.getElementById('timerValueDisplay').innerText = e.target.value;
+    syncPresetButtons();
 });
 
 document.getElementById('settingBidMode').addEventListener('change', (e) => {
+    syncPresetButtons();
     const isDouble = e.target.value === 'double';
     document.getElementById('bidIncrementPreviewTbody').innerHTML = isDouble ? `
         <tr><td class="p-2 text-gray-300">Up to ₹1.00 Cr</td><td class="p-2 text-right font-bold text-fuchsia-300">+₹10 Lakhs</td></tr>
@@ -3664,7 +3916,7 @@ document.getElementById('restoreDefaultsBtn').addEventListener('click', () => {
         "Restore Default Settings",
         "Restore all settings (Purse, Timer, Increments, Squad Limits) to defaults?",
         () => {
-            document.getElementById('settingPurse').value = 10000;
+            if (!appState.auctionStarted) document.getElementById('settingPurse').value = 10000;
             document.getElementById('settingTimer').value = 40;
             document.getElementById('timerValueDisplay').innerText = "40";
             document.getElementById('settingBidMode').value = "real";
@@ -3674,8 +3926,13 @@ document.getElementById('restoreDefaultsBtn').addEventListener('click', () => {
             document.getElementById('settingRetention').checked = true;
             document.getElementById('settingUnsoldRound').checked = true;
             document.getElementById('settingTheme').value = "fuchsia";
+            document.getElementById('settingReducedMotion').checked = false;
+            document.getElementById('settingAudio').checked = true;
+            modeInputs.forEach(input => input.checked = input.value === 'system');
+            document.getElementById('settingBidMode').dispatchEvent(new Event('change'));
+            showDisplayMode('system');
             applyTheme("fuchsia");
-            showToast("Default settings restored", "info");
+            showToast("Default settings ready. Save to apply them.", "info");
         }
     );
 });
@@ -4089,7 +4346,10 @@ function refreshSetupSummary() {
 document.getElementById('resultsCsv').addEventListener('click', exportAuctionCsv);
 document.getElementById('floorFinish').addEventListener('click', () => showAppConfirm('Finish auction?', 'Close bidding and view the final squads and spending totals.', endAuction));
 document.getElementById('showPoolsBtn').addEventListener('click', () => openAuctionCentre('pools'));
-document.getElementById('setupRules').addEventListener('click', () => document.getElementById('settingsBtn').click());
+document.getElementById('setupRules').addEventListener('click', () => {
+    document.getElementById('settingsBtn').click();
+    settingsPanel.querySelector('[data-target="setTabRules"]').click();
+});
 document.querySelectorAll('.swatch input').forEach(input => input.addEventListener('input', () => {
     input.closest('.franchise-card').style.setProperty('--team', input.value);
 }));
@@ -4102,6 +4362,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('startRoundBtn').addEventListener('click', startRound);
     document.getElementById('startUnsoldRoundBtn').addEventListener('click', startUnsoldRound);
 
+    showDisplayMode(savedMode);
+    settingsPanel.querySelectorAll('.settings-tab-btn').forEach(tab => {
+        tab.setAttribute('aria-controls', tab.dataset.target);
+        tab.setAttribute('aria-pressed', tab.classList.contains('active'));
+    });
     applyTheme(appState.settings.theme || 'fuchsia');
     setAudioEnabled(appState.settings.enableAudio !== false);
 
@@ -4156,7 +4421,7 @@ const dialogueNames = {
     retentionModal: 'Player retention', poolModal: 'Upcoming player pool', helpModal: 'Keyboard shortcuts',
     auctionCentreModal: 'Auction centre', appConfirmModal: 'Confirm action'
 };
-const focusable = 'button:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex="0"]';
+const focusable = 'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex="0"]';
 const dialogStack = [];
 for (const [id, name] of Object.entries(dialogueNames)) {
     const dialog = document.getElementById(id);
