@@ -31,7 +31,7 @@ You can launch and play the full game instantly in your browser:
    ```bash
    git clone https://github.com/umarmahtab/BoundaryClub.git
    ```
-2. **Open `index.html`** (or `auction.html`) in any modern desktop or mobile browser. Keep the `sounds/` directory alongside the file for full match audio.
+2. **Open `index.html`** in any modern desktop or mobile browser. Keep the `sounds/` directory alongside the file for full match audio.
 3. **Configure Franchises**: Customize team names and colours on the setup screen. Open **Settings** to adjust starting purses, pacing presets, squad constraints, and retention rules.
 4. **Run the Auction**: Conduct the retention phase, open player pools, place bids with the franchise cards or number keys (`1`–`4`), and sell or pass lots.
 5. **Review & Export**: Conclude the auction to inspect final squad compositions, review spending charts, and download CSV/PDF scorecards.

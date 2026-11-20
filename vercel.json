@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
-    { "source": "/auction", "destination": "/auction.html" },
-    { "source": "/auction.html", "destination": "/auction.html" }
+    { "source": "/auction", "destination": "/index.html" },
+    { "source": "/auction.html", "destination": "/index.html" }
   ]
 }
