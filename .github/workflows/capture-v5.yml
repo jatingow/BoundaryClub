@@ -1,0 +1,66 @@
+name: Capture v5 README screenshots
+on:
+  push:
+    branches: [docs/v5-gallery]
+    paths: [.github/workflows/capture-v5.yml]
+permissions:
+  contents: write
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture auction screens
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/screenshots/v5
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/boundary-http.log" 2>&1 &
+          cd "$RUNNER_TEMP"
+          npm install --no-audit --no-fund --no-save puppeteer-core@24.31.0
+          export CHROME_PATH="$(command -v google-chrome)"
+          node --input-type=module <<'JS'
+          import puppeteer from 'puppeteer-core';
+          import {join} from 'node:path';
+          const browser = await puppeteer.launch({executablePath:process.env.CHROME_PATH, headless:true});
+          try {
+            const page = await browser.newPage();
+            await page.setViewport({width:1440,height:940,deviceScaleFactor:1});
+            await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'},{name:'prefers-color-scheme',value:'light'}]);
+            await page.goto('http://127.0.0.1:4173/', {waitUntil:'networkidle2'});
+            const save = async (name) => {
+              await page.evaluate(async () => { await document.fonts.ready; await Promise.all([...document.images].filter(i=>i.getClientRects().length).map(i=>i.decode().catch(()=>{}))); });
+              await page.screenshot({path:join(process.env.GITHUB_WORKSPACE,'assets/screenshots/v5',name+'.jpg'),type:'jpeg',quality:90});
+            };
+            await page.waitForFunction(()=>document.querySelector('#setupPlayerCount').textContent==='238');
+            await save('auction-room');
+            await page.click('[data-edit-team="0"]');
+            await page.waitForSelector('#crestChoices button',{visible:true});
+            await save('franchise-crests');
+            await page.click('#cancelLogo');
+            await page.click('#settingsBtn');
+            await page.click('[data-target="setTabRules"]');
+            await page.$eval('#settingRetention',el=>{el.checked=false});
+            await page.click('#saveSettingsBtn');
+            await page.click('#startAuctionBtn');
+            await page.click('#startRoundBtn');
+            await page.click('#bidTeam1');
+            await page.click('#bidTeam2');
+            await page.click('#pauseTimerBtn');
+            await page.evaluate(()=>document.querySelector('#toastContainer').replaceChildren());
+            await save('bidding-floor');
+            await page.setViewport({width:412,height:915,deviceScaleFactor:1});
+            await page.evaluate(()=>localStorage.clear());
+            await page.reload({waitUntil:'networkidle2'});
+            await page.waitForSelector('#setupTitle',{visible:true});
+            await save('mobile-setup');
+          } finally {await browser.close();}
+          JS
+      - name: Save gallery to documentation branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- assets/screenshots/v5/*.jpg
+          git commit -m "Capture v5 setup, branding, bidding, and mobile screenshots"
+          git push origin HEAD:refs/heads/docs/v5-gallery
