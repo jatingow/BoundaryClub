@@ -1,4 +1,4 @@
-# Boundary Club v5
+# Boundary Club V5
 
 Run a four-franchise cricket auction from one screen. Start with 238 players and ₹100 crore per team, or bring your own player pool and set the rules for your league.
 
