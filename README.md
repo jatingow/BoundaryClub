@@ -1,18 +1,15 @@
-# Boundary Club
+# Boundary Club v5
 
-> [!IMPORTANT]
-> ## This is the latest version of Cricket Auction Simulator (v4) — now renamed **Boundary Club**.
->
-> Looking for the previous version?
->
-> **Legacy Repository:**  
-> [https://github.com/umarmahtab/Cricket-Auction-Simulator-V3](https://github.com/umarmahtab/Cricket-Auction-Simulator-V3)
->
-> This version includes a redesigned interface, improved auction flow, enhanced performance, better team management, new customization options, and numerous quality-of-life improvements over the original release.
+The current cricket auction simulator is on [main](https://github.com/umarmahtab/BoundaryClub) and [v5](https://github.com/umarmahtab/BoundaryClub/tree/v5). The previous release is preserved on [v4](https://github.com/umarmahtab/BoundaryClub/tree/v4).
 
+## What's new in v5
+
+- Change franchise names, colours, and logos from the auction room. Choose a club crest or upload your own image.
+- Set retention slots, player order, audio volume, and how the bid clock responds. Use 1×, 2×, or 5× bid steps on the floor.
+- Import a text-based player roster PDF with a preview, or export a roster and a paginated auction report. PDF processing runs locally.
 ---
 
-**Boundary Club** (Version 4 of *Cricket Auction Simulator*) is a broadcast-grade, four-franchise cricket auction simulator built to run seamlessly on a single screen. Name your franchises, retain your core players, manage team purses in real time, and experience the thrill of the gavel.
+**Boundary Club** (Version 5 of *Cricket Auction Simulator*) is a broadcast-grade, four-franchise cricket auction simulator built to run seamlessly on a single screen. Name your franchises, retain your core players, manage team purses in real time, and experience the thrill of the gavel.
 
 ### 🌐 Play Live Online (Deployments)
 
@@ -31,7 +28,7 @@ You can launch and play the full game instantly in your browser:
    ```bash
    git clone https://github.com/umarmahtab/BoundaryClub.git
    ```
-2. **Open `index.html`** in any modern desktop or mobile browser. Keep the `sounds/` directory alongside the file for full match audio.
+2. **Open `index.html`** in any modern desktop or mobile browser. Keep the `assets/` and `sounds/` directories alongside the file.
 3. **Configure Franchises**: Customize team names and colours on the setup screen. Open **Settings** to adjust starting purses, pacing presets, squad constraints, and retention rules.
 4. **Run the Auction**: Conduct the retention phase, open player pools, place bids with the franchise cards or number keys (`1`–`4`), and sell or pass lots.
 5. **Review & Export**: Conclude the auction to inspect final squad compositions, review spending charts, and download CSV/PDF scorecards.
@@ -76,7 +73,7 @@ Runs 100% locally with vanilla JavaScript, modern CSS, and zero build dependenci
 
 ---
 
-## Screenshots
+## Screenshots from v4
 
 | Franchise Setup | Appearance & Theme Settings |
 | --- | --- |

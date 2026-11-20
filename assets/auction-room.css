@@ -1,0 +1,183 @@
+/* Boundary Club auction workspace */
+:root {
+    --display: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --paper: #f6f7f3;
+    --card: #fff;
+    --ink: #182d25;
+    --muted: #586960;
+    --line: #d7dfd7;
+    --green: #104f3c;
+    --night: #102f26;
+    --panel: #193e32;
+    --accent: #f3ca70;
+    --gold: #f3ca70;
+    --soft: #c2d3c6;
+}
+html {scrollbar-gutter:stable}
+body {background:var(--paper);font-family:Inter,"Segoe UI",Arial,sans-serif; min-height:100dvh}
+body.theme-fuchsia {--green:#104f3c;--accent:#f3ca70}
+[data-mode=dark] body {--paper:#0f1d18;--card:#182a22;--ink:#f2f4e9;--muted:#acbcb1;--line:#35473c;background:var(--paper)}
+.sr-only {position:absolute!important; width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.room-icon,[data-icon] {width:18px;height:18px;display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;vertical-align:middle}
+.masthead, [data-mode=dark] .masthead {background:var(--card);border-bottom:1px solid var(--line)}
+.mast-inner,#app,.club-credit {width:min(1320px,calc(100% - clamp(36px,8vw,148px)));margin-inline:auto}
+.mast-inner {min-height:72px;gap:clamp(16px,3.3vw,58px)}
+.brand-title {gap:10px;color:var(--ink);font:700 26px/1 var(--display);letter-spacing:-1.5px}
+.brand-title i,[data-mode=dark] .brand-title i {font-weight:600;font-style:normal;color:inherit}
+.club-monogram {width:34px;height:39px;display:grid;place-items:center;background:#133f32;color:#f7d992;clip-path:polygon(0 6%,50% 0,100% 6%,100% 50%,94% 67%,80% 81%,50% 100%,20% 81%,6% 67%,0 50%)}
+.club-monogram svg {width:29px;height:34px}
+.workspace-nav {display:flex;gap:4px}
+.workspace-nav button,.mast-actions button,.tool-icon {display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);border:0;background:transparent;font-weight:600;font-size:13px;white-space:nowrap;padding:10px 13px;border-radius:7px}
+.workspace-nav button[aria-current],.workspace-nav button:hover,.mast-actions button:hover {background:color-mix(in srgb,#579371 12%,var(--card));color:var(--ink)}
+.workspace-nav .room-icon {width:16px;height:16px}
+.mast-actions {gap:2px}
+.mast-actions button {min-width:33px;height:35px;min-height:35px;padding:7px}
+.mast-actions #settingsBtn {margin-left:7px;border:1px solid var(--line);padding:8px 12px;color:var(--ink)}
+#audioStatusText {display:none}
+#app {margin-block:0;padding-block:clamp(18px,2.3vw,34px) 24px;flex:1}
+.opening-card,[data-mode=dark] .opening-card {min-height:260px;display:grid;grid-template-columns:1fr 1fr;position:relative;isolation:isolate;border:1px solid #164f3d;border-radius:16px;background:linear-gradient(106deg,#0b3329 0%,var(--green) 78%,#234d3c 100%);color:#faf9ed;box-shadow:0 2px 4px #182d250c}
+.opening-card::before {content:"";position:absolute;inset:0 0 0 40%;z-index:-1;background-image:linear-gradient(#d0ead909 1px,transparent 1px),linear-gradient(90deg,#d0ead909 1px,transparent 1px);background-size:27px 27px;mask-image:linear-gradient(90deg,transparent,#000 25%)}
+.opening-copy {padding:clamp(28px,3vw,44px) 0 clamp(28px,3vw,44px) clamp(24px,3.5vw,54px);z-index:2}
+.hero-kicker,.eyebrow,.franchise-index,.footer-brand {font:700 11px/1.3 "Segoe UI",Arial,sans-serif;text-transform:uppercase;letter-spacing:.14em}
+.hero-kicker {display:inline-flex;align-items:center;gap:8px;color:#f1dca4;border:1px solid #d1bd7f50;border-radius:30px;background:#e0c6790d;padding:5px 10px}
+.status-light {width:6px;height:6px;background:#edc96d;border-radius:50%}
+.opening-card h1 {color:#fffdf1;font:500 clamp(54px,5.35vw,83px)/1.05 var(--display);letter-spacing:-.065em;margin:13px 0 8px}
+.opening-card h1 em {color:var(--gold);font:italic 400 1em/1 Georgia,serif}
+.opening-desc {color:#d1e0d4;max-width:510px;font-size:15px;line-height:1.5}
+.hero-actions {display:flex;gap:10px;align-items:center;margin-top:22px}
+.hero-actions button,.logo-bottom .primary-action {display:inline-flex;gap:9px;align-items:center;justify-content:center;border-radius:7px;padding:11px 17px;min-height:42px;font-size:14px;font-weight:700;letter-spacing:0}
+.hero-actions .primary-action,[data-mode=dark] .hero-actions .primary-action,.logo-bottom .primary-action {color:#263b27;background:var(--gold);border:1px solid transparent}
+.hero-actions .primary-action:hover,.logo-bottom .primary-action:hover {background:#ffdd91;box-shadow:none}
+.hero-secondary {background:#ffffff0b;color:#f3f5ec;border:1px solid #c8d9bf55}
+.hero-secondary:hover {background:#ffffff16}
+.stadium-art {position:relative;align-self:stretch;min-width:0;display:grid;align-items:end;justify-items:end;pointer-events:none}
+.stadium-art img {display:block;width:105%;max-width:none;height:auto;filter:drop-shadow(0 5px 2px #06271d38);margin:0 1% 1% 0}
+.overview-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:16px 0 0}
+.metric {display:flex;align-items:center;gap:13px;padding:15px 18px;border:1px solid var(--line);border-radius:10px;background:var(--card);min-width:0}
+.metric-icon {display:grid;place-items:center;width:42px;height:42px;border-radius:10px;flex:none;color:#326f54;background:#eaf2e9}
+.metric:nth-child(2) .metric-icon {color:#496b8c;background:#ebf0f7}
+.metric:nth-child(3) .metric-icon {color:#966e2c;background:#faf0d9}
+.metric:nth-child(4) .metric-icon {color:#78638d;background:#f0ebf5}
+.metric .room-icon {width:21px;height:21px}
+.metric dt {font-size:12px;font-weight:600;color:var(--muted);line-height:1.3}
+.metric dd {font:650 clamp(20px,1.8vw,27px)/1.22 "Segoe UI",Arial,sans-serif;margin:2px 0 0;letter-spacing:-.055em;color:var(--ink);font-variant-numeric:tabular-nums}
+.section-head {margin:27px 0 14px}
+.section-head h1,.section-head h2,.result-title {font:600 clamp(30px,2.65vw,42px)/1.1 var(--display);letter-spacing:-.055em}
+.lineup-head .eyebrow {display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted)}
+.rule {width:19px;background:#ac925d}
+.secondary-action,.centre-pill-btn {background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:7px;font-size:13px}
+.franchise-grid {gap:14px}
+.franchise-card,[data-mode=dark] .franchise-card {border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--card);padding:0}
+.franchise-banner {position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:13px 17px 10px;background:linear-gradient(118deg,color-mix(in srgb,var(--team) 12%,var(--card)),color-mix(in srgb,var(--team) 21%,var(--card)));border-bottom:1px solid color-mix(in srgb,var(--team) 15%,var(--line))}
+.franchise-banner::after {content:"";z-index:-2;position:absolute;inset:0;background:repeating-linear-gradient(124deg,transparent 0 15px,color-mix(in srgb,var(--team) 8%,transparent) 15px 16px);mask-image:linear-gradient(90deg,transparent,#000)}
+.franchise-index {font-size:10px;color:color-mix(in srgb,var(--team) 64%,var(--ink));letter-spacing:.12em}
+.crest-echo {position:absolute;z-index:-1;right:-9px;top:-15px;width:116px;height:130px;opacity:.1;transform:rotate(14deg);color:var(--team);pointer-events:none}
+.crest-echo .club-crest {width:100%;height:100%}
+.crest,.crest-main,[data-mode=dark] .crest {height:55px;width:55px;padding:0;border:0;border-radius:0;background:none;color:var(--team)}
+.crest-main:hover {filter:drop-shadow(0 2px 2px #23362545)}
+.club-crest {display:inline-block;width:100%;height:100%;object-fit:contain;vertical-align:middle}
+.franchise-body {padding:9px 17px 10px}
+.name-field {display:flex;align-items:center;gap:6px;color:var(--muted)}
+.name-field [data-icon],.name-field svg {width:14px;height:14px}
+.franchise-name {flex:1;min-width:0;color:var(--ink);border:0;padding:3px 0 4px;font:650 22px/1.35 var(--display);letter-spacing:-.035em}
+.franchise-name:focus {outline-offset:0!important}
+.team-tools {display:flex;align-items:center;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:1px solid var(--line)}
+.team-tools button {display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:12px;font-weight:600;padding:4px 0}
+.team-tools button:hover {color:var(--ink)}
+.team-tools .room-icon {width:15px;height:15px}
+.swatch {width:24px;height:24px;padding:3px;border:1px solid var(--line);background:var(--card);box-shadow:none}
+.club-credit {display:flex;align-items:center;justify-content:space-between;text-align:left;gap:9px;padding:14px 0 18px;margin-block:0;border-top:1px solid var(--line);font:12px/1.4 "Segoe UI",sans-serif}
+.footer-brand {font-size:10px;color:var(--muted);letter-spacing:.15em}
+.credit-stitches {display:none}
+.club-credit a {font-weight:600}
+.stats-bar-ref,.centre-tabs-header,.settings-heading {background:linear-gradient(100deg,var(--night),var(--green))}
+.player-box-ref {background:linear-gradient(140deg,var(--green),var(--night))}
+.center-stage-ref {background:var(--night);border:1px solid #496352}
+.bid-size {display:flex;align-items:center;justify-content:space-between;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:5px 9px;font-size:12px;font-weight:650}
+.bid-size > div {display:flex;gap:3px}
+.bid-size button {padding:4px 10px;border-radius:5px;color:var(--muted)}
+.bid-size button[aria-pressed=true] {background:var(--green);color:#fff}
+.bid-team-card-btn,.team-purse-card,.bid-journal {border-radius:10px}
+.team-badge-icon .club-crest {width:32px;height:35px}
+.team-btn-top-row .club-crest {width:24px;height:24px;flex:none;color:var(--team)!important}
+.result-team-name {display:flex;align-items:center;gap:8px}
+.result-team-name .club-crest,.dashboard-team .club-crest {width:27px;height:29px;color:var(--team)}
+.modal-backdrop {backdrop-filter:blur(5px)}
+.modal-backdrop > .glass-effect {background:var(--night);border:1px solid #536a5c;border-radius:14px;box-shadow:0 22px 64px #06130e60}
+.modal-backdrop table {font-variant-numeric:tabular-nums}
+.modal-backdrop thead {background:#ffffff0a}
+#settingsModal .settings-heading h2,.modal-backdrop h2,.modal-backdrop h3:not(.text-sm),#poolModalTitle,#retentionModalTitle {font-family:var(--display)}
+.club-setting {display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:600;font-size:14px;color:#e6efe6}
+.club-setting select {padding:6px 10px;background:var(--panel);color:white;border:1px solid #adbbaa55}
+.club-setting input {accent-color:var(--accent)}
+#endScreen {background:linear-gradient(115deg,var(--night),var(--green));border-radius:16px}
+#endScreen .result-title {color:#f7e9bf}
+#endScreen .secondary-action {margin:4px}
+.logo-panel {width:min(440px,100%);padding:22px;max-height:90dvh;overflow:auto;color:#f3f6eb}
+.logo-heading,.logo-bottom,.upload-logo {display:flex;align-items:center;justify-content:space-between;gap:8px}
+.logo-heading h2 {margin:4px 0 0;font-size:30px;line-height:1.1}
+.logo-heading .eyebrow {color:var(--gold);font-size:10px}
+.logo-heading .tool-icon {color:#e4eadf}
+.logo-preview {margin:18px 0;display:flex;align-items:center;gap:18px;background:#ffffff0b;padding:12px;border:1px solid #ffffff24;border-radius:9px}
+#logoPreview {width:58px;height:58px;display:block;color:var(--team)}
+#logoTeam {font:600 24px var(--display)}
+.logo-label {font-size:13px;font-weight:650;margin:6px 0}
+#crestChoices {display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+#crestChoices button {display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;background:#ffffff09;border:1px solid #ffffff27;color:var(--team)}
+#crestChoices .club-crest {width:38px;height:38px}
+#crestChoices span {color:#f3f6ec;font:500 12px "Segoe UI",sans-serif;text-transform:capitalize}
+#crestChoices button[aria-pressed=true] {background:#e9cc7a18;border-color:var(--gold)}
+.upload-logo {position:relative;flex-wrap:wrap;margin:14px 0 4px;font-size:12px}
+.upload-logo label {display:inline-flex;gap:7px;align-items:center;cursor:pointer;padding:8px;border:1px solid #ffffff40;border-radius:6px}
+.upload-logo input {position:absolute;opacity:0;width:1px;height:1px}
+.upload-logo:focus-within label {outline:2px solid var(--gold)}
+.upload-logo small {font-size:11px;color:#bfcdc1}
+#logoError {color:#ffb7a4;font-size:13px}
+.logo-bottom {justify-content:flex-end;margin-top:12px}
+@media(min-width:1550px) {.opening-card{min-height:300px}.franchise-banner{padding:16px 20px 12px}.crest-main{width:64px;height:64px}}
+@media(max-width:1020px) {.mast-inner {gap:12px}.workspace-nav button {padding:8px;font-size:12px}.mast-actions {gap:0}.mast-actions #settingsBtn{margin-left:1px}.metric{padding:13px 11px;gap:9px}.stadium-art img{width:112%}.opening-desc{max-width:410px}}
+@media(max-width:800px) {
+    .mast-inner {flex-wrap:wrap;gap:0;min-height:0;padding-top:9px}
+    .workspace-nav {order:3;width:100%;margin:6px 0;gap:3px}
+    .workspace-nav button {padding:7px 12px}
+    .opening-card,[data-mode=dark] .opening-card {min-height:236px;grid-template-columns:1.1fr .9fr}
+    .opening-copy {padding:25px 0 25px 24px}
+    .stadium-art img {width:125%;margin-bottom:8%}
+    .opening-card h1 {font-size:53px}
+    .metric-icon {width:31px;height:34px}
+    .franchise-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric dt {font-size:11px}
+}
+@media(max-width:600px) {
+    .mast-inner,#app,.club-credit {width:calc(100% - 28px)}
+    .mast-inner {padding-top:8px}
+    .workspace-nav {justify-content:space-between}
+    .mast-actions #settingsBtn span {display:none}
+    .brand-title{font-size:22px;gap:7px}.club-monogram{width:27px;height:32px}.club-monogram svg{width:24px;height:28px}
+    .mast-actions button {min-width:28px;height:32px;padding:5px}
+    #app {padding-top:14px}
+    .opening-card,[data-mode=dark] .opening-card {min-height:0;display:block;border-radius:12px}
+    .opening-copy {padding:22px 20px 0}
+    .opening-card h1 {font-size:clamp(42px,10vw,57px);margin:10px 0 5px}
+    .opening-desc {max-width:340px;font-size:14px}
+    .hero-actions {margin-top:14px;gap:7px}
+    .hero-actions button {font-size:13px;padding:8px 13px;min-height:38px}
+    .stadium-art {height:clamp(100px,26vw,152px);margin-top:-1px;overflow:hidden}
+    .stadium-art img {width:86%;height:130%;object-fit:contain;object-position:right bottom;margin:0 1% 0 0}
+    .overview-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
+    .metric {padding:10px 12px}.metric dd{font-size:20px}.metric-icon{width:34px;height:34px}
+    .section-head {margin:21px 0 11px;gap:6px}
+    .lineup-head .eyebrow {font-size:9px}
+    .section-head h2 {font-size:29px}
+    #managePoolBtn {padding:7px 8px;gap:4px;font-size:11px}
+    .franchise-grid {gap:9px}
+    .franchise-banner {padding:11px;gap:7px}
+    .franchise-body {padding:7px 10px}
+    .franchise-name {font-size:19px}
+    .crest-main {width:45px;height:45px}
+    .crest-echo {width:85px;height:90px}
+    .club-credit {align-items:flex-start}.club-credit p {text-align:right}
+    .settings-layout .settings-nav {gap:4px}
+    .team-tools button {font-size:11px}
+}
+@media(max-width:370px){.mast-inner,#app,.club-credit{width:calc(100% - 20px)}.workspace-nav button{gap:5px;padding-inline:7px}.franchise-name{font-size:17px}.team-tools button{gap:3px}}

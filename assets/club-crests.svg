@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Boundary Club franchise crests</title>
+  <defs>
+    <g id="club-shield">
+      <path fill="currentColor" d="M32 2 57 9v19c0 15-9 26-25 34C16 54 7 43 7 28V9z"/>
+      <path stroke="#fff6df" stroke-width="1.5" d="m32 6 21 6v16c0 12-7 22-21 29-14-7-21-17-21-29V12z"/>
+      <path fill="#fff6df" d="m26 49 6 2 6-2-6 5z"/>
+    </g>
+    <symbol id="crest-falcon" viewBox="0 0 64 64">
+      <use href="#club-shield"/>
+      <path fill="#fff6df" d="m13 22 18-1-7-6 12 3c5 1 8 3 10 7l6 3-6 4-2 7-4-7-8 2-12 10 4-9-7 2 8-8-6 2 5-5z"/>
+      <path fill="currentColor" d="m32 23 11 2-3 3zM26 31l9-4-3 4-8 5z"/>
+    </symbol>
+    <symbol id="crest-knight" viewBox="0 0 64 64">
+      <use href="#club-shield"/>
+      <path fill="#fff6df" d="M20 43c1-6 4-10 8-14l-8 4-5-5 8-8 4-1 2-7 4 5 5-3 4 5-3-1c5 4 8 12 7 25H20z"/>
+      <path fill="currentColor" d="m22 25 5-2-2 3h-3zM29 40c1-6 6-9 7-15 3 6 0 10-3 15zM39 40c1-3 2-7 1-11 3 4 4 8 3 11z"/>
+      <path stroke="#fff6df" stroke-width="2.4" stroke-linecap="round" d="M21 46h24"/>
+    </symbol>
+    <symbol id="crest-crown" viewBox="0 0 64 64">
+      <use href="#club-shield"/>
+      <path fill="#fff6df" d="m15 23 10 6 7-14 7 14 10-6-5 16H20z"/>
+      <path fill="currentColor" d="m32 26 3 5-3 4-3-4z"/>
+      <path stroke="#fff6df" stroke-width="3" stroke-linecap="round" d="M21 43h22"/>
+      <g fill="#fff6df"><circle cx="15" cy="21" r="2.2"/><circle cx="32" cy="13.8" r="2.2"/><circle cx="49" cy="21" r="2.2"/></g>
+    </symbol>
+    <symbol id="crest-thunder" viewBox="0 0 64 64">
+      <use href="#club-shield"/>
+      <path fill="#fff6df" d="m36 13 9 1-10 13h10L25 48l4-15H19z"/>
+      <path stroke="#fff6df" stroke-width="2" stroke-linecap="round" d="m21 17-6 8m7-3-4 5m26 8-5 7"/>
+    </symbol>
+    <symbol id="crest-tiger" viewBox="0 0 64 64">
+      <use href="#club-shield"/>
+      <path fill="#fff6df" d="m17 18 7 1 8-4 8 4 7-1 1 9-4 4-1 8-6 3-5 5-5-5-6-3-1-8-4-4z"/>
+      <path fill="currentColor" d="m19 21 4 1-4 4zm26 0v5l-4-4zM28 19l4 2 4-2-4 8zm-8 9 9 3-2 3-4-2zm24 0-3 4-4 2-2-3zm-22 6 5 3-4 1zm20 0-1 4-4-1zm-14 2h8l-3 4-1 1-1-1z"/>
+      <path stroke="currentColor" stroke-linecap="round" stroke-width="1.7" d="M32 39v3m0 0-3 1m3-1 3 1"/>
+    </symbol>
+    <symbol id="crest-star" viewBox="0 0 64 64">
+      <use href="#club-shield"/>
+      <path fill="#fff6df" d="m32 13 5.3 10.8 12 1.8-8.7 8.4 2.1 12L32 40.3l-10.7 5.6 2.1-12-8.7-8.4 12-1.8z"/>
+      <path fill="currentColor" d="M32 20v12l-6.6 8.2 6.6-3.5 6.7 3.5-1.3-7.4 5.4-5.2-7.5-1.1z"/>
+    </symbol>
+  </defs>
+  <style>.club-crest-preview{display:none}.club-crest-preview:target{display:inline}</style>
+  <use id="logo-falcon" class="club-crest-preview" href="#crest-falcon" color="#16748b"/>
+  <use id="logo-knight" class="club-crest-preview" href="#crest-knight" color="#aa444b"/>
+  <use id="logo-crown" class="club-crest-preview" href="#crest-crown" color="#267754"/>
+  <use id="logo-thunder" class="club-crest-preview" href="#crest-thunder" color="#72509a"/>
+  <use id="logo-tiger" class="club-crest-preview" href="#crest-tiger" color="#ae552b"/>
+  <use id="logo-star" class="club-crest-preview" href="#crest-star" color="#344e91"/>
+</svg>
